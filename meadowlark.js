@@ -10,12 +10,9 @@ app.set('view engine', 'handlebars');
 //add static middleware
 app.use(express.static(__dirname + '/public'));
 
-//to test dynamic content
-var fortunes = [
-  "blaBla",
-  "fdfsfsdfs",
-  "sdsdsdsdsds"
-]
+//to test dynamic views and using global variables from self-made modules
+var fortuneRandom = require ('./lib/fortune.js')
+
 
 app.set('port', process.env.port || 8080);
 console.log('port 8888 set to app');
@@ -24,11 +21,11 @@ app.get('/', function(req, res){
   res.render('home');
 
 } );
-console.log('1');
+
 
 app.get('/about', function(req, res){
-  var fortuneRandom = fortunes[Math.floor(Math.random() * fortunes.length)];
-  res.render('about', { fortune: fortuneRandom});
+
+  res.render('about', { fortune: fortuneRandom.getFortune()});
 });
 console.log('2');
 
